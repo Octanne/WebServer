@@ -1,0 +1,1 @@
+g++ -o "/home/pi/projects/WebServer/bin/ARM/Release/WebServer.out" -Wl,--no-undefined -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack -pthread /home/pi/projects/WebServer/obj/ARM/Release/main.o /home/pi/projects/WebServer/obj/ARM/Release/WebServer.o /home/pi/Desktop/Mongoose/mongoose.so
