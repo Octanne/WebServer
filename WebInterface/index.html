@@ -1,21 +1,13 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Cache-Control" content="no-cache"/><!--https://stackoverflow.com/questions/32414/how-can-i-force-clients-to-refresh-javascript-files#answer-54941810-->
-    <link rel="stylesheet" href="include/style/body.css">
-    <link rel="stylesheet" href="include/style/widgets.css">
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+    <meta gttp-equiv="EXPIRES" content="Sat, 01 Jan 2000 00:00:00 UTC">
+    <link rel="stylesheet" href="include/css/body.css" asp-append-version="true">
+    <link rel="stylesheet" href="include/css/widgets.css" asp-append-version="true">
 
-    <!--JQuery -->
-    <script type="text/javascript" src="include/script/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="include/script/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="include/script/jquery-ui-1.12.0.min.js"></script>
-    <!--JQuery -->
-
-    <script type="text/javascript" src="include/script/script.js"></script>
-    <script type="text/javascript" src="include/script/controlClient.js"></script>
-    <!--<script type="text/javascript" src="include/script/jquery.js"</script>-->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="include/js/script.js" asp-append-version="true"></script>
     
     <title>ISN - LaserNet Project</title>
     
@@ -25,8 +17,8 @@
         <h1>LaserNet Project (Jérôme & Corentin)</h1>
     </header>
     <div id="wrapper"><!--body-->
-        <div id="sidebar" class="">
-            <nav id="sommaire">
+        <div id="sidebar">
+            <nav id="sommaire" class="widget">
                 <h3>Navigation</h3>
                 <ul>
                     <li class="menu_link" id="menuPresentation" onclick="openPage(this);">Presentation</li>
@@ -35,37 +27,86 @@
                     <li class="menu_link" id="menuCredits" onclick="openPage(this);">Credits</li>
                 </ul>
             </nav>
-            <div class="widget">
+            <div id="raspberrypi_status" class="widget">
                 <h3>Raspberry Pi's Status</h3>
                 <div class="widget-core">
-                    <h5 style="padding-bottom: 8px; font-size:1.15em;">Temperature: <a id="dTemp" style="color: darkorange;">0°C</a></h5>
-                    <h5>CPU Usage:</h5>
-                    <div class="progress-box"><div class="progress-bar" style="width:43%;">43%</div></div>
-                    <h5>RAM Usage:</h5>
-                    <div class="progress-box"><div class="progress-bar" style="width:58%;">58%</div></div>
+                    <h5 style="font-size:1.15em;">Temperature: <a style="color: darkorange;">56°C</a></h5>
+                    <div class="progress-group">
+                        <h5>CPU Usage:</h5>
+                        <div class="progress-box"><div class="progress-bar" style="width:43%;">43%</div></div>
+                    </div>
+                    <div class="progress-group">
+                        <h5>RAM Usage:</h5>
+                        <div class="progress-box"><div class="progress-bar" style="width:58%;">58%</div></div>
+                    </div>
                 </div>
             </div>
-            <div class="widget">
+            <div id="laser_status" class="widget">
                 <h3>Laser's Status</h3>
                 <div class="widget-core">
-                    <h5 style="padding-bottom: 8px;">Synchronization: <a style="color: green;">ACTIVE</a></h5>
-                    <h5 style="padding-bottom: 8px;">Web connection: <a style="color: green;">ACTIVE</a></h5>
-                    <h5>Network Usage:</h5>
-                    <div class="progress-box"><div class="progress-bar" style="width:78%;">78%</div></div>
+                    <h5>Synchronization: <a style="color: green;">ACTIVE</a></h5>
+                    <h5>Web connection: <a style="color: green;">ACTIVE</a></h5>
+                    <div class="progress-group">
+                        <h5 class="nearby_h5">Network Usage:</h5>
+                        <div class="progress-box"><div class="progress-bar" style="width:78%;">78%</div></div>
+                    </div>
                 </div>
             </div>
-            <div class="widget">
-                <h3><center>Developer's Data</center></h3>
-                <p style="text-align:center;">
-                    Project directed by<br>
-                    Jérôme Lécuyer & Corentin Levalet
+            <div id="credit" class="widget" style="text-align:center;">
+                <h3>Developer's Data</h3>
+                <p>
+                    Project directed by<br/>
+                    Jérôme Lécuyer & Corentin Levalet<br/>
+                    ISN Project - 2019-2020
                 </p>
             </div>
         </div>
         
         <div id="page">
+            <!-- Presentation -->
             <div class="pageContent" id="pagePresentation">
                 <h2>Presentation</h2>
+                <section>
+                    <h3>Section N°1</h3>
+                    <p>
+                        Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
+                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
+                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
+                    </p>
+                </section>
+                <section>
+                    <h3>Section N°2</h3>
+                    <p>
+                        Je vous présente ici le magnifique contenu de la section numéro 2. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
+                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
+                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
+                    </p>
+                </section>
+                <section>
+                    <h3>Section N°3</h3>
+                    <p>
+                        Je vous présente ici le magnifique contenu de la section numéro 3. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
+                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
+                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
+                    </p>
+                </section>
+            </div>
+            <!-- Controller -->
+            <div class="pageContent" id="pageController">
+                <h2>Controller</h2>
+                <section>
+                    <h3>Console</h3>
+                        <div id="console">
+                            <p>Démarrage de la console...</p>
+                            <p>Synchronisation avec 192.168.1.10</p>
+                            <p>Synchronisation terminée avec Raspberry</p>
+                        </div>
+                        <input type="text" id="consoleLine" name="consoleLine">
+                </section>
+            </div>
+            <!-- Docs -->
+            <div class="pageContent" id="pageDocumentation">
+                <h2>Documentation</h2>
                 <section>
                     <h3>Section N°1</h3>
                     <p>
@@ -99,20 +140,24 @@
                     </p>
                 </section>
             </div>
-            <div class="pageContent" id="pageController">
-                <h2>Controller</h2>
+            <!-- Credits -->
+            <div class="pageContent" id="pageCredits">
+                <h2>Credits</h2>
                 <section>
-                    <h3>Console</h3>
-                        <div id="console"><p>Démarrage de la console...<</p><p>Synchronisation avec 192.168.1.10</p><p>Synchronisation terminée avec Raspberry</p></div>
-                        <input type="text" id="consoleLine" name="consoleLine" size="10">
+                    <h3>Libraries and more</h3>
+                    <p>
+                        On this project we has used different technologies and libraries so, You can find here the different libraries used in the project : <br>
+                        &nbsp&nbsp&nbsp- Libtins (C++ Libs)<br>
+                        &nbsp&nbsp&nbsp- JavaScript (Tech)<br>
+                        &nbsp&nbsp&nbsp- Mongoose (C++ Libs)<br>
+                        &nbsp&nbsp&nbsp- C++ (Tech : Language)<br>
+                        <br>
+                        This page need to be revisited and completed.
+                    </p>
                 </section>
             </div>
-            
         </div>
         
     </div>
-    <!--<footer>
-        <p class="textfooter">Jérôme Lecuyer & Corentin Levalet - ISN Project (LaserNet)</p>
-    </footer>-->
 </body>
 </html>
