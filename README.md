@@ -2,4 +2,4 @@
 
 # Libraries
 - Mongoose Web Implementation
-- RapidJSON
+- RapidJSON : http://rapidjson.org/index.html
