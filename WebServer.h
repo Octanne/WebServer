@@ -43,6 +43,6 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p);
 static double mem_usage();
 static double cpu_usage();
 static double temperature();
-static double net_usage();
+static int net_usage();
 #endif
 

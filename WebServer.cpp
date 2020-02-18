@@ -129,7 +129,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 					// RAM Usage
 					rapidjson::Value& ramPrctV = jsonDocSend["ramUsage"];
 					ramPrctV.SetDouble(mem_usage());
-					// NET Usage // @Todo A faire
+					// NET Usage
 					rapidjson::Value& netPrctV = jsonDocSend["netUsage"];
 					netPrctV.SetDouble(net_usage());
 					// Status Lasernet @Todo
@@ -142,24 +142,57 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 					rapidjson::StringBuffer buffer;
 					rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 					jsonDocSend.Accept(writer);
+					
+					mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buffer.GetString(), buffer.GetSize());
+					std::cout << "[WebSocket] SysStatus message send to " << addr << " !" << std::endl;
+				}
+				else if (std::string(order.GetString()) == "command") {
 
-					std::cout << "JSON : " << intoString(buffer.GetString(), buffer.GetSize()) << std::endl;
+					
+				}
+				else { // Invalid Order
+					// Document
+					rapidjson::Document jsonDocSend;
+					const char* jsonTxt = "{\"type\":\"error\",\"msg\":\"\"}";
+					jsonDocSend.Parse(jsonTxt);
+
+					// Type
+					rapidjson::Value& typeV = jsonDocSend["type"];
+					typeV.SetString("error");
+					// Temperature
+					rapidjson::Value& tempV = jsonDocSend["msg"];
+					tempV.SetString("You have send an invalid order!");
+
+					// Stringify the DOM
+					rapidjson::StringBuffer buffer;
+					rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+					jsonDocSend.Accept(writer);
 
 					mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buffer.GetString(), buffer.GetSize());
-					std::cout << "[WebSocket] SysStatus message send to " << addr << " !";
-				}
-				if (std::string(order.GetString()) == "command") {
-
-				}
-				else {
-					// SEND Error => invalid order
+					std::cout << "[WebSocket] Error message send to " << addr << " !" << std::endl;
 				}
 			}
 			else {
 				std::cout << "[WebSocket] SecretKey isn't correct !" << std::endl;
+				// Document
+				rapidjson::Document jsonDocSend;
+				const char* jsonTxt = "{\"type\":\"error\",\"msg\":\"\"}";
+				jsonDocSend.Parse(jsonTxt);
 
+				// Type
+				rapidjson::Value& typeV = jsonDocSend["type"];
+				typeV.SetString("error");
+				// Temperature
+				rapidjson::Value& tempV = jsonDocSend["msg"];
+				tempV.SetString("You have send an invalid secretKey!");
 
+				// Stringify the DOM
+				rapidjson::StringBuffer buffer;
+				rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+				jsonDocSend.Accept(writer);
 
+				mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buffer.GetString(), buffer.GetSize());
+				std::cout << "[WebSocket] Error message send to " << addr << " !" << std::endl;
 				// SEND Error => bad key
 			}
 			break;
@@ -207,7 +240,15 @@ static double temperature() {
 	temp.insert(2, 1, '.'); temp.pop_back(); temp.pop_back();
 	return std::stod(temp);
 }
-// Network Usage
-static double net_usage() {
-	return 0;
+// Network Usage => RX per ct
+static int net_usage() {
+	std::string packet_rx = "0", packet_tx = "0";
+
+	std::ifstream ifiler("/sys/class/net/laser0/statistics/rx_packets");
+	ifiler >> packet_rx; ifiler.close();
+	std::ifstream ifilet("/sys/class/net/laser0/statistics/tx_packets");
+	ifilet >> packet_tx; ifilet.close();
+
+	if((std::stoi(packet_rx) + std::stoi(packet_tx)) == 0) return 0;
+	return std::stoi(packet_rx)*100/(std::stoi(packet_rx)+std::stoi(packet_tx));
 }

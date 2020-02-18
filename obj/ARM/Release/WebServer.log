@@ -17,9 +17,9 @@ C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(44,15): warni
 C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(45,15): warning : ‘double temperature()’ declared ‘static’ but never defined [-Wunused-function]
 C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(45,15): warning :  static double temperature();
 C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(45,15): warning :                ^~~~~~~~~~~
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,15): warning : ‘double net_usage()’ declared ‘static’ but never defined [-Wunused-function]
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,15): warning :  static double net_usage();
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,15): warning :                ^~~~~~~~~
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,12): warning : ‘int net_usage()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,12): warning :  static int net_usage();
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,12): warning :             ^~~~~~~~~
 C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(37,34): warning : ‘s_http_server_opts’ defined but not used [-Wunused-variable]
 C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(37,34): warning :  static struct mg_serve_http_opts s_http_server_opts;
 C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(37,34): warning :                                   ^~~~~~~~~~~~~~~~~~
