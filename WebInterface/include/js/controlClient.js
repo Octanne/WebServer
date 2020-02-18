@@ -6,8 +6,6 @@ wSocket.onopen = function(ev)  { console.log(ev);
 wSocket.onerror = function(ev) { console.log(ev); };
 wSocket.onclose = function(ev) { console.log(ev); };
 
-
-
 wSocket.onmessage = function(ev) {
 	var webMessage = JSON.parse(ev.data);
 	console.log("[WebSocket] new data incoming : "+webMessage.type);
@@ -25,12 +23,14 @@ wSocket.onmessage = function(ev) {
 		console.log("CPU Usage : " + cpuUsage + "% | Ram Usage : " + ramUsage + "%");
 		console.log("Web : " + webStatus + " | Sync : " + syncStatus);
 		console.log("---------------------------------------------");
+		
+		
 	}
 	if(webMessage.type == "consoleUP"){
 		
 	}
 	if(webMessage.type == "error"){
-		
+		console.log("[WebSocket] ERROR : " + webMessage.msg);
 	}
 };
 
