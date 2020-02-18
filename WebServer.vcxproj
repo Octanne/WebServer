@@ -83,8 +83,8 @@
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <AdditionalOptions>-pthread -Wunused-variable -Wunused-function %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>%(ClCompile.AdditionalIncludeDirectories);/home/pi/Desktop/Mongoose/</AdditionalIncludeDirectories>
+      <AdditionalOptions>-pthread %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>%(ClCompile.AdditionalIncludeDirectories);/home/pi/Desktop/Mongoose/;/usr/local/include/rapidjson</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalOptions>-pthread %(AdditionalOptions)</AdditionalOptions>

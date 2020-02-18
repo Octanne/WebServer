@@ -5,12 +5,24 @@
   Starting remote build
   Compiling sources:
   main.cpp
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(29,13): warning : ‘void ev_handler(mg_connection*, int, void*)’ declared ‘static’ but never defined [-Wunused-function]
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(29,13): warning :  static void ev_handler(struct mg_connection *nc, int ev, void *p);
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(29,13): warning :              ^~~~~~~~~~
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(26,34): warning : ‘s_http_server_opts’ defined but not used [-Wunused-variable]
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(26,34): warning :  static struct mg_serve_http_opts s_http_server_opts;
-C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(26,34): warning :                                   ^~~~~~~~~~~~~~~~~~
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(40,13): warning : ‘void ev_handler(mg_connection*, int, void*)’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(40,13): warning :  static void ev_handler(struct mg_connection *nc, int ev, void *p);
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(40,13): warning :              ^~~~~~~~~~
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(43,15): warning : ‘double mem_usage()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(43,15): warning :  static double mem_usage();
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(43,15): warning :                ^~~~~~~~~
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(44,15): warning : ‘double cpu_usage()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(44,15): warning :  static double cpu_usage();
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(44,15): warning :                ^~~~~~~~~
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(45,15): warning : ‘double temperature()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(45,15): warning :  static double temperature();
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(45,15): warning :                ^~~~~~~~~~~
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,15): warning : ‘double net_usage()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,15): warning :  static double net_usage();
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(46,15): warning :                ^~~~~~~~~
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(37,34): warning : ‘s_http_server_opts’ defined but not used [-Wunused-variable]
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(37,34): warning :  static struct mg_serve_http_opts s_http_server_opts;
+C:\Users\Corentin\source\repos\PacketSniffer\WebServer\WebServer.h(37,34): warning :                                   ^~~~~~~~~~~~~~~~~~
   WebServer.cpp
   Linking objects
   WebServer.vcxproj -> C:\Users\Corentin\source\repos\PacketSniffer\WebServer\bin\ARM\Release\WebServer.out

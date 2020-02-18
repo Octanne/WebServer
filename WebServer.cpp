@@ -7,6 +7,12 @@ WebServer::WebServer()
 	// Init mongoose
 	mg_mgr_init(&mgr, NULL);
 
+	//SSL Secure Connection
+	memset(&bind_opts, 0, sizeof(bind_opts));
+	bind_opts.ssl_cert = "/home/pi/Desktop/certificates/certificate.pem"; //Error normal
+	bind_opts.ssl_key = "/home/pi/Desktop/certificates/key.pem"; //Error normal
+	bind_opts.error_string = &err;
+
 	// Set port
 	port = "8000";
 }
@@ -22,11 +28,11 @@ void WebServer::launch() {
 	std::cout << "Starting WebServer on port " << port << std::endl;
 	
 	// Start Web Server
-	nc = mg_bind(&mgr, port.c_str(), ev_handler);
+	nc = mg_bind_opt(&mgr, port.c_str(), ev_handler, bind_opts);
 
 	// If connection fails
 	if (nc == NULL) {
-		std::cout << "Failed to create listener" << std::endl;
+		std::cout << "Failed to create listener : " << err << std::endl;
 		return;
 	}
 
@@ -60,7 +66,7 @@ std::string intoString(const char* a, int size)
 static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 	switch (ev) {
 		case MG_EV_WEBSOCKET_HANDSHAKE_DONE: {
-			/* New websocket connection. Tell everybody. */
+			/* New websocket connection. */
 			char addr[32];
 			mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
 				MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
@@ -80,28 +86,81 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 		case MG_EV_WEBSOCKET_FRAME: {
 			struct websocket_message *wm = (struct websocket_message *) p;
 			/* New websocket message read & send an answer. */
-			struct mg_str d = { (char *)wm->data, wm->size };
 			char addr[32];
+			struct mg_str d = { (char *)wm->data, wm->size };
 			mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
 				MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
-			std::cout << "[WebSocket:"<< addr << "] new request receive: '" << wm->data << "'" << std::endl;
-			
-			std::string requestM = intoString(d.p, d.len);
-			if (requestM == "temp") {
-				//Reading Temp
-				std::string temp = "";
-				std::ifstream ifile("/sys/class/thermal/thermal_zone0/temp");
-				ifile >> temp;
-				ifile.close();
-				temp.insert(2, 1, '.');
-				temp.pop_back(); temp.pop_back();
-				std::string answer = "temp=" + temp;
+			std::cout << "[WebSocket] a new request receive of " << addr <<  " :" << std::endl;
 
-				std::cout << "[WebSocket:" << addr << "] answer send: '" << answer << "'" << std::endl;
+			rapidjson::Document jsonDoc;
+			jsonDoc.Parse(intoString(d.p, d.len).c_str());
+			rapidjson::Value& secretKey = jsonDoc["secretKey"];
+			rapidjson::Value& date = jsonDoc["date"];
+			rapidjson::Value& order = jsonDoc["order"];
+			rapidjson::Value& args = jsonDoc["args"];
 
-				char buf[500];
-				snprintf(buf, sizeof(buf), "%.*s", (int)answer.length(), answer.c_str());
-				mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buf, strlen(buf));
+			if (!secretKey.IsNull()) {
+				std::cout << "---------------------------------------" << std::endl;
+				std::cout << "secretKey : " << secretKey.GetString() << std::endl;
+				std::cout << "date : " << date.GetString() << std::endl;
+				std::cout << "order : " << order.GetString() << std::endl;
+				std::cout << "args : " << args.GetString() << std::endl;
+				std::cout << "---------------------------------------" << std::endl;
+			}
+
+			if (std::string(secretKey.GetString()) == "secretKey") {
+				std::cout << "[WebSocket] SecretKey is correct !" << std::endl;
+				if (std::string(order.GetString()) == "status") {
+
+					// Document
+					rapidjson::Document jsonDocSend;
+					const char* jsonTxt = "{\"type\":\"sysStatus\",\"temp\":\"\",\"cpuUsage\":\"\",\"ramUsage\":\"\",\"netUsage\":\"\",\"webStatus\":\"\",\"syncStatus\":\"\"}";
+					jsonDocSend.Parse(jsonTxt);
+
+					// Type
+					rapidjson::Value& typeV = jsonDocSend["type"];
+					typeV.SetString("sysStatus");
+					// Temperature
+					rapidjson::Value& tempV = jsonDocSend["temp"];
+					tempV.SetDouble(temperature());
+					// CPU Usage // A revoir
+					rapidjson::Value& cpuPrctV = jsonDocSend["cpuUsage"];
+					cpuPrctV.SetDouble(cpu_usage());
+					// RAM Usage
+					rapidjson::Value& ramPrctV = jsonDocSend["ramUsage"];
+					ramPrctV.SetDouble(mem_usage());
+					// NET Usage // @Todo A faire
+					rapidjson::Value& netPrctV = jsonDocSend["netUsage"];
+					netPrctV.SetDouble(net_usage());
+					// Status Lasernet @Todo
+					rapidjson::Value& webStatV = jsonDocSend["webStatus"];
+					webStatV.SetBool(false);
+					rapidjson::Value& syncStatV = jsonDocSend["syncStatus"];
+					syncStatV.SetBool(false);
+
+					// Stringify the DOM
+					rapidjson::StringBuffer buffer;
+					rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+					jsonDocSend.Accept(writer);
+
+					std::cout << "JSON : " << intoString(buffer.GetString(), buffer.GetSize()) << std::endl;
+
+					mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buffer.GetString(), buffer.GetSize());
+					std::cout << "[WebSocket] SysStatus message send to " << addr << " !";
+				}
+				if (std::string(order.GetString()) == "command") {
+
+				}
+				else {
+					// SEND Error => invalid order
+				}
+			}
+			else {
+				std::cout << "[WebSocket] SecretKey isn't correct !" << std::endl;
+
+
+
+				// SEND Error => bad key
 			}
 			break;
 		}
@@ -111,4 +170,44 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 			break;
 		}
 	}
+}
+
+// Mem Usage
+static double mem_usage() {
+	unsigned int memTotal, memFree, buffers, cached;
+	char id[18], kb[2];
+
+	std::ifstream file("/proc/meminfo");
+
+	file >> id >> memTotal >> kb \
+		>> id >> memFree >> kb \
+		>> id >> buffers >> kb \
+		>> id >> buffers >> kb \
+		>> id >> cached >> kb;
+
+	file.close();
+
+	return (memTotal - memFree) * 100 / memTotal;
+}
+// CPU Usage
+static double cpu_usage() {
+	std::ifstream  file("/proc/loadavg");
+
+	char line[5];
+	file.getline(line, 5);
+
+	float prct = std::stof(line) * 100 / 4;
+	return prct;
+}
+// Temperature
+static double temperature() {
+	std::string temp;
+	std::ifstream ifile("/sys/class/thermal/thermal_zone0/temp");
+	ifile >> temp; ifile.close();
+	temp.insert(2, 1, '.'); temp.pop_back(); temp.pop_back();
+	return std::stod(temp);
+}
+// Network Usage
+static double net_usage() {
+	return 0;
 }

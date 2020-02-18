@@ -7,9 +7,4 @@
   <ItemGroup>
     <ClInclude Include="WebServer.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Filter Include="libs">
-      <UniqueIdentifier>{9b9d2c9a-35df-4314-ad71-e61260cbf0d8}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
 </Project>
