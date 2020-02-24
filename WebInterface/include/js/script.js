@@ -7,8 +7,6 @@ if(window.addEventListener) {
     window.attachEvent("onhashchange",loadPage);
 }
 
-
-
 function loadPage() {
     var elementFocus = window.location.href;
     elementFocus = elementFocus.substring(elementFocus.lastIndexOf('/')+2);
@@ -32,3 +30,15 @@ function openPage(element) {
     //l'actualisation va se faire par loadPage lors de l'evenement onhashchange
 }
 
+function addLog(type, arg) {
+    var time = new Date();//ms
+    var timeStr = time.getHours()
+                +":"+time.getMinutes()
+                +":"+time.getSeconds()
+                +"."+time.getMilliseconds();
+    $("#console").append("<div class='console_line' type='"+type+"'>"
+                      +"<time datetime='"+time.toString()+"'>"
+                      +timeStr+"</time>"
+                      +"<p>"+arg+"</p>"
+                      +"</div>");
+}

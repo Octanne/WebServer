@@ -14,8 +14,37 @@
     
 }
 
+
+#console .console_line {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.console_line > * {
+    height: auto;
+    margin: auto 0;
+    margin-right: 4px;
+}
+#console time {
+    font-size: 1.2em;
+}
+#console time:before { content: "["; }
+#console time:after { content: "]"; }
 #console p {
     border: none;
     box-shadow: none;
-    margin: 0;
+    padding: 0;
+}
+.console_line[type="command"] time {
+    display: none;
+}
+.console_line[type="command"]:before {
+    height: auto;
+    margin: auto 0;
+    content: ">";
+    margin-right: .5em;
+}
+.console_line[type="error"] p {
+    color: red;
 }
