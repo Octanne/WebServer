@@ -7,6 +7,7 @@ header {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    position: relative;
 }
 
 header h1 {

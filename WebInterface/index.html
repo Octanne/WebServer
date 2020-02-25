@@ -6,6 +6,7 @@
     <meta gttp-equiv="EXPIRES" content="Sat, 01 Jan 2000 00:00:00 UTC">
     <link rel="stylesheet" href="include/css/body.css" asp-append-version="true">
     <link rel="stylesheet" href="include/css/widgets.css" asp-append-version="true">
+    <link rel="stylesheet" href="include/css/darkmode.css">
 
     <script type="text/javascript" src="include/js/script.js" asp-append-version="true"></script>
     <script type="text/javascript" src="include/js/controlClient.js" asp-append-version="true"></script>
@@ -16,9 +17,13 @@
     <title>ISN - LaserNet Project</title>
     
 </head>
-<body>
+<body darkmode="false" id="darkmodeSwitcher">
     <header>
         <h1>LaserNet Project (Jérôme & Corentin)</h1>
+        <label class="switch">
+            <input type="checkbox" id="darkmodeChecker">
+            <span class="slider" id="darkmodeClicker"></span>
+        </label>
     </header>
     <div id="wrapper"><!--body-->
         <div id="sidebar">
@@ -34,7 +39,7 @@
             <div id="raspberrypi_status" class="widget">
                 <h3>Raspberry Pi's Status</h3>
                 <div class="widget-core">
-                    <h5 style="font-size:1.15em;">Temperature: <a id="temperature" style="color: darkorange;">0°C</a></h5>
+                    <h5 style="font-size:1.15em;">Temperature: <a id="temperature" class="darkorange">0°C</a></h5>
                     <div class="progress-group">
                         <h5>CPU Usage:</h5>
                         <div class="progress-box"><div id="cpuUsage" class="progress-bar" style="width:0%;">0%</div></div>
@@ -48,8 +53,8 @@
             <div id="laser_status" class="widget">
                 <h3>Laser's Status</h3>
                 <div class="widget-core">
-                    <h5 style="font-size:1.1em;">Synchronization: <a id="syncStat" style="color: red;">INACTIF</a></h5>
-                    <h5 style="font-size:1.1em;">Web connection: <a id="webStat" style="color: red;">INACTIF</a></h5>
+                    <h5 style="font-size:1.1em;">Synchronization: <a id="syncStat" class="red">INACTIF</a></h5>
+                    <h5 style="font-size:1.1em;">Web connection: <a id="webStat" class="red">INACTIF</a></h5>
                     <div class="progress-group">
                         <h5 class="nearby_h5">Network Usage:</h5>
                         <div id="netUsageTX" class="progress-box" style="display:flex; padding-right: 4px;"><div id="netUsageRX" class="progress-bar" style="width:0%;">0%</div></div>
@@ -163,6 +168,8 @@
                     </p>
                 </section>
             </div>
+            <!--<img src="https://media.discordapp.net/attachments/439390947084861442/681639735986487311/Screenshot_20200225-001240_Samsung_Internet.jpg">
+            <img src="https://cdn.discordapp.com/attachments/439390947084861442/681640013976567932/Screenshot_20200225-001358_Samsung_Internet.jpg">-->
         </div>
         
     </div>

@@ -68,11 +68,11 @@ function socketReceiveMessage(ev) {
 		document.getElementById("netUsageTX").innerHTML = "<div id=\"netUsageRX\" class=\"progress-bar\" style=\"width:0%;\">"+netUsage+"%</div>"+(100-netUsage)+"%";
 		document.getElementById("netUsageRX").style.width = netUsage+"%";
 		if(temp <= 45){
-			document.getElementById("temperature").style.color = "green";
+			document.getElementById("temperature").class = "green";
 		}else if(temp <= 50){
-			document.getElementById("temperature").style.color = "darkorange";
+			document.getElementById("temperature").class = "darkorange";
 		}else if(temp > 60){
-			document.getElementById("temperature").style.color = "red";
+			document.getElementById("temperature").class = "red";
 		}
 		if(syncStatus){
 			document.getElementById("syncStat").style.color = "green";

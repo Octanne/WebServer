@@ -7,6 +7,8 @@ if(window.addEventListener) {
     window.attachEvent("onhashchange",loadPage);
 }
 
+var consoleScrollEnd = true;
+
 
 function onLoadPage() {
     loadPage();
@@ -26,8 +28,14 @@ function onLoadPage() {
             return false;//auto compltation ?
         }
     });
-    
-    initControlClient();
+    $("#console").on("scroll", function (e) {
+        var maxScroll = $("#console")[0].scrollHeight - $("#console").outerHeight() - 96;
+        consoleScrollEnd = (($("#console").scrollTop()+128) > maxScroll);//on perd ou on gagne le scroll
+    });
+    $("#darkmodeClicker").on("click", function (e) {
+        document.getElementById("darkmodeSwitcher").setAttribute("darkmode", !$("#darkmodeChecker")[0].checked);
+    });
+    //initControlClient();
 }
 function loadPage() {
     var elementFocus = window.location.href;
@@ -61,22 +69,18 @@ function addLog(type, arg) {
     if (typeof arg == "string")
         arg = arg.split("\n").join("<br>");//replace \n by <br>
     
-    var maxScroll = $("#console")[0].scrollHeight - $("#console").outerHeight();
-    var isOnBottomScroll = (($("#console").scrollTop()+100) > maxScroll);//100px = 4 lignes
-    console.log(maxScroll, $("#console").scrollTop()+50, isOnBottomScroll);
     $("#console").append("<div class='console_line' type='"+type+"'>"
                       +"<time datetime='"+time.toString()+"'>"
                       +timeStr+"</time>"
                       +"<p>"+arg+"</p>"
                       +"</div>");
-    
-    
-    maxScroll = $("#console")[0].scrollHeight - $("#console").outerHeight();
-    if (isOnBottomScroll)
-        $("#console").animate({ scrollTop: maxScroll }, 100);//scroll to the bottom
+
+    if (consoleScrollEnd)
+        scrollToTheBottom();
 }
 function scrollToTheBottom() {
-    
+    var maxScroll = $("#console")[0].scrollHeight - $("#console").outerHeight() - 96;
+    $("#console").animate({ scrollTop: maxScroll }, 100);//scroll to the bottom
 }
 function splitLine(line, separation) {
     var lineStrings = line.split("\"");//string
