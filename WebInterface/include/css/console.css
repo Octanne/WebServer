@@ -23,7 +23,7 @@
 }
 #console::after {
     content: "";
-    margin-top: 128px;
+    margin-top: 32px;
 }
 
 
@@ -35,17 +35,14 @@
 }
 #console > * > * {
     height: auto;
-    margin-bottom: auto;
-    margin-right: 4px;
+    margin: 0 4px auto 0;
+    font-size: 1.3em;
 }
 #console p {
     border: none;
     box-shadow: none;
     padding: 0;
-    white-space: pre;
-}
-#console time {
-    font-size: 1.2em;
+    white-space: pre-wrap;
 }
 #console time:before { content: "["; }
 #console time:after { content: "]"; }
@@ -60,4 +57,9 @@
 }
 .console_line[type="error"] p {
     color: red;
+}
+
+
+#consoleLine {
+    padding: 4px;
 }

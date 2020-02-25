@@ -45,12 +45,19 @@
     font-size: 0.8em;
 }
 
-.red {
+.red, output[type="boolean"]:not([value="true"]) {
     color: red;
 }
 .darkorange {
     color: darkorange;
 }
-.green {
+.green, output[type="boolean"][value="true"] {
     color: green;
 }
+
+.celsius::after { content: "°C"; }
+.percent::after, .progress-bar::after { content: "%"; }
+
+output[type="boolean"]:not([value="true"])::before { content:"INACTIF"; }
+output[type="boolean"][value="true"]::before { content:"ACTIF"; }
+

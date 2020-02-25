@@ -23,6 +23,7 @@
     cursor: pointer;
     font-size: 1.4em;
     width: 100%;/*ne varie pas avec le gras*/
+    
 }
 .menu_link:hover {
     color : rgb(95,158,160);

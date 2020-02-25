@@ -17,7 +17,7 @@
     <title>ISN - LaserNet Project</title>
     
 </head>
-<body darkmode="false" id="darkmodeSwitcher">
+<body id="darkmodeSwitcher">
     <header>
         <h1>LaserNet Project (Jérôme & Corentin)</h1>
         <label class="switch">
@@ -39,25 +39,27 @@
             <div id="raspberrypi_status" class="widget">
                 <h3>Raspberry Pi's Status</h3>
                 <div class="widget-core">
-                    <h5 style="font-size:1.15em;">Temperature: <a id="temperature" class="darkorange">0°C</a></h5>
+                    <h5 style="font-size:1.15em;">Temperature: <a id="temperature" class="green celsius">0</a></h5>
                     <div class="progress-group">
                         <h5>CPU Usage:</h5>
-                        <div class="progress-box"><div id="cpuUsage" class="progress-bar" style="width:0%;">0%</div></div>
+                        <div class="progress-box"><div id="cpuUsage" class="progress-bar" style="width:0%;">0</div></div>
                     </div>
                     <div class="progress-group">
                         <h5>RAM Usage:</h5>
-                        <div class="progress-box"><div id="ramUsage" class="progress-bar" style="width:0%;">0%</div></div>
+                        <div class="progress-box"><div id="ramUsage" class="progress-bar" style="width:0%;">0</div></div>
                     </div>
                 </div>
             </div>
             <div id="laser_status" class="widget">
                 <h3>Laser's Status</h3>
                 <div class="widget-core">
-                    <h5 style="font-size:1.1em;">Synchronization: <a id="syncStat" class="red">INACTIF</a></h5>
-                    <h5 style="font-size:1.1em;">Web connection: <a id="webStat" class="red">INACTIF</a></h5>
-                    <div class="progress-group">
+                    <h5 style="font-size:1.1em;">Synchronization: <output id="syncStat" type="boolean" value="false"></output></h5>
+                    <h5 style="font-size:1.1em;">Web connection: <output id="webStat" type="boolean" value="false"></output></h5>
+                    <div class="progress-group" id="netUsageTX">
                         <h5 class="nearby_h5">Network Usage:</h5>
-                        <div id="netUsageTX" class="progress-box" style="display:flex; padding-right: 4px;"><div id="netUsageRX" class="progress-bar" style="width:0%;">0%</div></div>
+                        <!--<div id="netUsageTX" class="progress-box" style="display:flex; padding-right: 4px;"><div id="netUsageRX" class="progress-bar" style="width:0%;">0</div></div>-->
+                        
+                        <div class="progress-box"><div id="netUsageRX" class="progress-bar" style="width:0%;">0</div></div>
                     </div>
                 </div>
             </div>
@@ -77,27 +79,27 @@
                 <h2>Presentation</h2>
                 <section>
                     <h3>Section N°1</h3>
-                    <p>
-                        Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
-                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
-                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
-                    </p>
+                    <div>
+                        <p>Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations.</p>
+                        <p>Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement.</p>
+                        <p>Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.</p>
+                    </div>
                 </section>
                 <section>
                     <h3>Section N°2</h3>
-                    <p>
-                        Je vous présente ici le magnifique contenu de la section numéro 2. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
-                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
-                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
-                    </p>
+                    <div>
+                        <p>Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations.</p>
+                        <p>Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement.</p>
+                        <p>Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.</p>
+                    </div>
                 </section>
                 <section>
                     <h3>Section N°3</h3>
-                    <p>
-                        Je vous présente ici le magnifique contenu de la section numéro 3. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
-                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
-                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
-                    </p>
+                    <div>
+                        <p>Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations.</p>
+                        <p>Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement.</p>
+                        <p>Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.</p>
+                    </div>
                 </section>
             </div>
             <!-- Controller -->
@@ -105,9 +107,7 @@
                 <h2>Controller</h2>
                 <section>
                     <h3>Console</h3>
-                        <div id="console">
-                            <div class="console_line" type="command"><p>Initialisation de la console...</p></div>
-                        </div>
+                        <div id="console"></div>
                         <input type="text" id="consoleLine" name="consoleLine">
                 </section>
             </div>
@@ -116,35 +116,35 @@
                 <h2>Documentation</h2>
                 <section>
                     <h3>Section N°1</h3>
-                    <p>
-                        Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
-                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
-                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
-                    </p>
+                    <div>
+                        <p>Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations.</p>
+                        <p>Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement.</p>
+                        <p>Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.</p>
+                    </div>
                 </section>
                 <section>
                     <h3>Section N°2</h3>
-                    <p>
-                        Je vous présente ici le magnifique contenu de la section numéro 2. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
-                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
-                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
-                    </p>
+                    <div>
+                        <p>Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations.</p>
+                        <p>Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement.</p>
+                        <p>Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.</p>
+                    </div>
                 </section>
                 <section>
                     <h3>Section N°3</h3>
-                    <p>
-                        Je vous présente ici le magnifique contenu de la section numéro 3. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
-                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
-                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
-                    </p>
+                    <div>
+                        <p>Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations.</p>
+                        <p>Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement.</p>
+                        <p>Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.</p>
+                    </div>
                 </section>
                 <section>
                     <h3>Section N°4</h3>
-                    <p>
-                        Je vous présente ici le magnifique contenu de la section numéro 4. Ainsi, ici vous pourrez retrouver différentes informations. <br><br>
-                        Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement. <br><br>
-                        Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.
-                    </p>
+                    <div>
+                        <p>Je vous présente ici le magnifique contenu de la section numéro 1. Ainsi, ici vous pourrez retrouver différentes informations.</p>
+                        <p>Biensûr comme le site est encore en construction les sections sont remplis de texte inutile tel que ce que tu lis actuellement.</p>
+                        <p>Il n'y a aussi du coup pas plusieurs texte différents mais un seul qui a subit le sors du Ctrl+C, Ctrl+V.</p>
+                    </div>
                 </section>
             </div>
             <!-- Credits -->
@@ -152,20 +152,28 @@
                 <h2>Credits</h2>
                 <section>
                     <h3>Les différentes bibliothéques et technologies utilisées :</h3>
-                    <p style="text-align: justify;">
-                        &nbsp&nbsp&nbspLe projet « LaserNet » a été développé par Corentin Levalet et Jérôme Lécuyer. Le software de contrôle du système laser ainsi que le serveur web ont été développé en C++,
+                    <div class="alinea" style="text-align: justify;">
+                        <p>Le projet « LaserNet » a été développé par Corentin Levalet et Jérôme Lécuyer. Le software de contrôle du système laser ainsi que le serveur web ont été développé en C++,
                         mais le « backend » de la page web est quant à lui développé en JavaScript pour la parti client. Ainsi nous avons utilisé différentes librairies et technologies au sein de se projet que vous pouvez
-                        retrouver ci-dessous :<br><br>
-                        &nbsp&nbsp&nbsp&nbspLes Technologies :<br>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- JavaScript (Scripting Language)<br>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- HTML / CSS (Structure & Style Language)<br>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- C++ (OOP Language)<br><br>
-                        &nbsp&nbsp&nbsp&nbspLes Librairies :<br>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- RapidJson (JSON Parser Lib)<br>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- Libtins (Network Lib)<br>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- Mongoose (Network Lib)<br>
-                        <br>Les droits des différentes bibliothèques ci-dessus appartiennent à leurs propriétaires respectif.
-                    </p>
+                        retrouver ci-dessous</p>
+                        <ul style="list-style:'> '; padding-left: 1em;">
+                            <li>Les Technologies :
+                                <ul style="list-style:'- '; margin-top: 0;">
+                                    <li>JavaScript (Scripting Language)</li>
+                                    <li>HTML / CSS (Structure & Style Language)</li>
+                                    <li>C++ (OOP Language)</li>
+                                </ul>
+                            </li>
+                            <li>Les Librairies :
+                                <ul style="list-style:'- '; margin-top: 0;">
+                                    <li>RapidJson (JSON Parser Lib)</li>
+                                    <li>Libtins (Network Lib)</li>
+                                    <li>Mongoose (Network Lib)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>Les droits des différentes bibliothèques ci-dessus appartiennent à leurs propriétaires respectif.</p>
+                    </div>
                 </section>
             </div>
             <!--<img src="https://media.discordapp.net/attachments/439390947084861442/681639735986487311/Screenshot_20200225-001240_Samsung_Internet.jpg">

@@ -82,13 +82,18 @@ section {
 }
 h3 {
     font-size: 1.4em;
-    margin-bottom: 8px;
+    margin: 4px 0;
 }
-section p {
+section > p, section > div {
     border: 1px grey solid;
     box-shadow: 2.5px 3.5px grey;
-    font-size: 1.3em;
     
     padding: 8px;
-    margin-top: 0;
+    font-size: 1.3em;
 }
+section .alinea {
+    text-indent: 1em;
+}
+section li { text-indent: 0; }
+section p:first-child { margin-top: 0; }
+section p:last-child { margin-bottom: 0; }
