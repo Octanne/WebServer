@@ -1,50 +1,63 @@
-#pageController {
-    height: auto;
-}
-#console {
-    border: 1.5px gray solid;
-    background: #fff;
-    
-    padding: 8px;
-    margin-bottom: 8px;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    
-}
-
-
-#console .console_line {
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-.console_line > * {
-    height: auto;
-    margin: auto 0;
-    margin-right: 4px;
-}
-#console time {
-    font-size: 1.2em;
-}
-#console time:before { content: "["; }
-#console time:after { content: "]"; }
-#console p {
-    border: none;
-    box-shadow: none;
-    padding: 0;
-}
-.console_line[type="command"] time {
-    display: none;
-}
-.console_line[type="command"]:before {
-    height: auto;
-    margin: auto 0;
-    content: ">";
-    margin-right: .5em;
-}
-.console_line[type="error"] p {
-    color: red;
+#pageController {
+    height: calc(100% - 24px);
+    display: flex;
+    flex-direction: column;
+}
+#pageController section {
+    height: 100%;/*maximum !*/
+    display: flex;
+    flex-direction: column;
+}
+#console {
+    border: 1.5px gray solid;
+    background: #fff;
+    
+    padding: 8px;
+    margin-bottom: 8px;
+    height: 100%;
+    overflow-y: scroll;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+#console::after {
+    content: "";
+    margin-top: 20%;
+}
+
+
+#console > * {/*.console_line*/
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+#console > * > * {
+    height: auto;
+    margin-bottom: auto;
+    margin-right: 4px;
+}
+#console p {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    white-space: pre;
+}
+#console time {
+    font-size: 1.2em;
+}
+#console time:before { content: "["; }
+#console time:after { content: "]"; }
+.console_line[type="command"] time {
+    display: none;
+}
+.console_line[type="command"]:before {
+    height: auto;
+    margin: auto 0;
+    content: ">";
+    margin-right: .5em;
+}
+.console_line[type="error"] p {
+    color: red;
 }

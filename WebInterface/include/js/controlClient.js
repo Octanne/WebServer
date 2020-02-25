@@ -1,14 +1,47 @@
-var wSocket = new WebSocket('wss://' + location.host + '/wss');
-if (!window.console) { window.console = { log: function() {} }; }
-wSocket.onopen = function(ev)  { console.log(ev);
-	launchAutoRefresh();
-};
-wSocket.onerror = function(ev) { console.log(ev); };
-wSocket.onclose = function(ev) { console.log(ev); };
+var wSocket = null;
+var debugOn = false;
 
-wSocket.onmessage = function(ev) {
+if (!window.console)
+		window.console = { log: function() {} };
+
+function initControlClient() {
+    wSocket = new WebSocket('wss://' + location.host + '/wss');
+	wSocket.onopen = socketOnOpen;
+	wSocket.onerror = socketOnError;
+	wSocket.onclose = socketOnClose;
+	wSocket.onmessage = socketReceiveMessage;
+}
+
+
+function socketOnOpen(ev) {
+	if (debugOn)
+		console.log(ev);
+	addLog("debug", "Socket Open "+ev);
+	launchAutoRefresh();
+}
+function socketOnError(ev) {
+	if (debugOn)
+		console.log(ev);
+	switch (ev.eventPhase) {
+        case 2:
+			addLog("error", "Socket can't reach the server");
+			break;
+		default:
+			addLog("error", "Socket Error at the phase "+ev.eventPhase);
+
+			break;
+    }
+}
+function socketOnClose(ev) {
+    if (debugOn)
+		console.log(ev);
+	addLog("debug", "Socket Closed because: \""+ev.reason+"\"");
+}
+function socketReceiveMessage(ev) {
 	var webMessage = JSON.parse(ev.data);
-	console.log("[WebSocket] new data incoming : "+webMessage.type);
+	//console.log("[WebSocket] new data incoming : "+webMessage.type);
+	addLog("info", "[WebSocket] new data incoming : "+webMessage.type);
+	
 	
 	if(webMessage.type == "sysStatus"){
 		var temp = webMessage.temp;
@@ -18,11 +51,16 @@ wSocket.onmessage = function(ev) {
 		
 		var webStatus = webMessage.webStatus;
 		var syncStatus = webMessage.syncStatus;
-		console.log("---------------------------------------------");
+		/*console.log("---------------------------------------------");
 		console.log("Temp : " + temp + "°C | Network : " + netUsage + "%");
 		console.log("CPU Usage : " + cpuUsage + "% | Ram Usage : " + ramUsage + "%");
 		console.log("Web : " + webStatus + " | Sync : " + syncStatus);
-		console.log("---------------------------------------------");
+		console.log("---------------------------------------------");*/
+		addLog("info", "---------------------------------------------"
+			   +"Temp : " + temp + "°C | Network : " + netUsage + "%"
+			   +"CPU Usage : " + cpuUsage + "% | Ram Usage : " + ramUsage + "%"
+			   +"Web : " + webStatus + " | Sync : " + syncStatus
+			   +"---------------------------------------------");
 		
 		document.getElementById("temperature").innerHTML = temp+"°C";
 		document.getElementById("cpuUsage").innerHTML = cpuUsage+"%"; document.getElementById("cpuUsage").style.width = cpuUsage+"%";
@@ -55,11 +93,16 @@ wSocket.onmessage = function(ev) {
 		
 	}
 	if(webMessage.type == "error"){
-		console.log("[WebSocket] ERROR : " + webMessage.msg);
+		//console.log("[WebSocket] ERROR : " + webMessage.msg);
+		addLog("error", "[WebSocket] : " + webMessage.msg);
 	}
 };
 
 function sendMessage(type, arg = "nothing"){
+	if (!wSocket) {
+		addLog("error", "[WebSocket] : not initialized");
+		return false;
+	}
 	var webMessage = {
 		secretKey: "secretKey",
 		date: Date.now().toString(),
