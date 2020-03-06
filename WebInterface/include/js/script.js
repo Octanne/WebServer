@@ -59,7 +59,7 @@ function loadPage() {
     var elementFocus = window.location.href;
     elementFocus = elementFocus.substring(elementFocus.lastIndexOf('/')+2);
     var menu_links = document.getElementsByClassName("menu_link");
-    if (elementFocus == "" && menu_links.length >= 1) {
+    if (menu_links.length >= 1 && (elementFocus == "" || !document.getElementById("page"+elementFocus))) {
         elementFocus = menu_links[0].id.substring(menu_links[0].id.lastIndexOf("menu")+4);
         //si elementFocus n'est pas défini (url sans #Name) alors le premier onglet est selectionné
     }
@@ -125,7 +125,8 @@ function newCommand(command) {
         case "?":
             addLog("help", "Aide de la console :\n"
                    +"    help : affiche cet aide\n"
-                   +"    sendMessage [type] [args] : envoie un message au raspberrypi");
+                   +"    sendMessage [type] [args] : envoie un message au raspberrypi\n"
+                   +"    <a href='https://files.octanne.eu/web/ISN%20LaserNet/#Documentation' style='color: -webkit-link;'>Obtenir plus d'informations</a>");
             break;
         case "sendmessage":
             sendMessage(args.shift(), args);
