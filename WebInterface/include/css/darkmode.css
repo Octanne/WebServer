@@ -50,7 +50,7 @@ input:checked + .slider:before {
 
 
 
-* { color: initial; }/*bug de transition si on a pas*/
+p, h1, h3, h5 { color: initial; }/*bug de transition si on a pas*/
 [darkmode="true"] * { color: white; }
 * {
     transition: background-color .5s, color .3s, border-color .5s;/*scrollbar can't have transition*/
@@ -73,13 +73,13 @@ body[darkmode="true"], [darkmode="true"] #console, [darkmode="true"] #consoleLin
     --box-shadow-color: #4b5258;
 }
 
-[darkmode="true"] .red, [darkmode="true"] output[type="boolean"]:not([value="true"]) {
+[darkmode="true"] [color="red"], [darkmode="true"] output[type="boolean"]:not([value="true"]) {
     color: #e68888;
 }
-[darkmode="true"] .darkorange {
+[darkmode="true"] [color="darkorange"] {
     color: #dc7f1f;
 }
-[darkmode="true"] .green, [darkmode="true"] output[type="boolean"][value="true"] {
+[darkmode="true"] [color="green"], [darkmode="true"] output[type="boolean"][value="true"] {
     color: #8cf28e;
 }
 
@@ -93,4 +93,6 @@ body[darkmode="true"], [darkmode="true"] #console, [darkmode="true"] #consoleLin
 }
 [darkmode="true"] ::-webkit-scrollbar-thumb:hover {
     background-color: #ccc;
-}
+}
+[darkmode="true"] a:link { color: #4D4DF7; }
+[darkmode="true"] a:visited { color: #5B5BA8; }

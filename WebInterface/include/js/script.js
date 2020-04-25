@@ -46,7 +46,12 @@ function onLoadPage() {
     });
     setDarkMode(localStorage.getItem('darkmode'));
 
-    initControlClient();
+    try {
+        initControlClient();
+    } catch(e) {
+        alert(e);
+    }
+    
 }
 function setDarkMode(enabled) {
     document.getElementById("darkmodeSwitcher").setAttribute("darkmode", enabled);
@@ -126,7 +131,7 @@ function newCommand(command) {
             addLog("help", "Aide de la console :\n"
                    +"    help : affiche cet aide\n"
                    +"    sendMessage [type] [args] : envoie un message au raspberrypi\n"
-                   +"    <a href='https://files.octanne.eu/web/ISN%20LaserNet/#Documentation' style='color: -webkit-link;'>Obtenir plus d'informations</a>");
+                   +"    <a href='#Documentation' style='color: -webkit-link;'>Obtenir plus d'informations</a>");
             break;
         case "sendmessage":
             sendMessage(args.shift(), args);

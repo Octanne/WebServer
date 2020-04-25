@@ -70,11 +70,11 @@ function socketReceiveMessage(ev) {
 		setProgressBarValue(document.getElementById("netUsageRX"), netUsage);
 		
 		if(temp <= 45)
-			document.getElementById("temperature").class = "green";
-		else if(temp <= 50)
-			document.getElementById("temperature").class = "darkorange";
-		else if(temp > 60)
-			document.getElementById("temperature").class = "red";
+			document.getElementById("temperature").setAttribute("color", "green");
+		else if(temp <= 60)
+			document.getElementById("temperature").setAttribute("color", "darkorange");
+		else
+			document.getElementById("temperature").setAttribute("color", "red");
 
 		/*if(syncStatus){
 			document.getElementById("syncStat").class = "green";

@@ -45,19 +45,34 @@
     font-size: 0.8em;
 }
 
-.red, output[type="boolean"]:not([value="true"]) {
+[color="red"], output[type="boolean"]:not([value="true"]) {
     color: red;
 }
-.darkorange {
+[color="darkorange"] {
     color: darkorange;
 }
-.green, output[type="boolean"][value="true"] {
+[color="green"], output[type="boolean"][value="true"] {
     color: green;
 }
 
 .celsius::after { content: "°C"; }
 .percent::after, .progress-bar::after { content: "%"; }
 
+
+
+.inline-widgetinfo {
+    display: flex;
+    flex-direction: row;
+}
+output[type="boolean"] {
+    display: flex;
+    width: 0;
+}
+.inline-widgetinfo * {
+    font-size: 0;
+}
+output[type="boolean"]::before {
+    font-size: initial;
+}
 output[type="boolean"]:not([value="true"])::before { content:"INACTIF"; }
 output[type="boolean"][value="true"]::before { content:"ACTIF"; }
-
