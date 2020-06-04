@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\WebInterface",
-    "\\WebInterface\\include"
+    ""
   ],
-  "SelectedNode": "\\WebInterface\\include\\js",
+  "SelectedNode": "\\WebServer.cpp",
   "PreviewInSolutionExplorer": false
 }

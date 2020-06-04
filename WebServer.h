@@ -17,6 +17,10 @@
 class WebServer
 {
 private:
+	// Debug
+	bool DEBUG = false;
+	// Secret Key
+	string SECRET_KEY = "raspberryIND";
 	// Mongoose event manager
 	struct mg_mgr mgr;
 	// Mongoose connection

@@ -85,12 +85,14 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 		}
 		case MG_EV_WEBSOCKET_FRAME: {
 			struct websocket_message *wm = (struct websocket_message *) p;
-			/* New websocket message read & send an answer. */
-			char addr[32];
 			struct mg_str d = { (char *)wm->data, wm->size };
-			mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
-				MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
-			std::cout << "[WebSocket] a new request receive of " << addr <<  " :" << std::endl;
+			/* Request Receive */
+			if (DEBUG) {
+				char addr[32];
+				mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
+					MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
+				std::cout << "[WebSocket] a new request receive of " << addr << " :" << std::endl;
+			}
 
 			rapidjson::Document jsonDoc;
 			jsonDoc.Parse(intoString(d.p, d.len).c_str());
@@ -99,7 +101,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 			rapidjson::Value& order = jsonDoc["order"];
 			rapidjson::Value& args = jsonDoc["args"];
 
-			if (!secretKey.IsNull()) {
+			if (!secretKey.IsNull() && DEBUG) {
 				std::cout << "---------------------------------------" << std::endl;
 				std::cout << "secretKey : " << secretKey.GetString() << std::endl;
 				std::cout << "date : " << date.GetString() << std::endl;
@@ -108,10 +110,10 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 				std::cout << "---------------------------------------" << std::endl;
 			}
 
-			if (std::string(secretKey.GetString()) == "secretKey") {
-				std::cout << "[WebSocket] SecretKey is correct !" << std::endl;
+			if (std::string(secretKey.GetString()) == SECRET_KEY) {
+				if(DEBUG)std::cout << "[WebSocket] SecretKey is correct !" << std::endl;
 				if (std::string(order.GetString()) == "status") {
-
+					
 					// Document
 					rapidjson::Document jsonDocSend;
 					const char* jsonTxt = "{\"type\":\"sysStatus\",\"temp\":\"\",\"cpuUsage\":\"\",\"ramUsage\":\"\",\"netUsage\":\"\",\"webStatus\":\"\",\"syncStatus\":\"\"}";
@@ -144,56 +146,18 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 					jsonDocSend.Accept(writer);
 					
 					mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buffer.GetString(), buffer.GetSize());
-					std::cout << "[WebSocket] SysStatus message send to " << addr << " !" << std::endl;
+					if (DEBUG)std::cout << "[WebSocket] SysStatus message send to " << addr << " !" << std::endl;
 				}
 				else if (std::string(order.GetString()) == "command") {
-
 					
 				}
 				else { // Invalid Order
-					// Document
-					rapidjson::Document jsonDocSend;
-					const char* jsonTxt = "{\"type\":\"error\",\"msg\":\"\"}";
-					jsonDocSend.Parse(jsonTxt);
-
-					// Type
-					rapidjson::Value& typeV = jsonDocSend["type"];
-					typeV.SetString("error");
-					// Temperature
-					rapidjson::Value& tempV = jsonDocSend["msg"];
-					tempV.SetString("You have send an invalid order!");
-
-					// Stringify the DOM
-					rapidjson::StringBuffer buffer;
-					rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-					jsonDocSend.Accept(writer);
-
-					mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buffer.GetString(), buffer.GetSize());
-					std::cout << "[WebSocket] Error message send to " << addr << " !" << std::endl;
+					sendError(nc, addr, "You have send an invalid order!");
 				}
 			}
 			else {
-				std::cout << "[WebSocket] SecretKey isn't correct !" << std::endl;
-				// Document
-				rapidjson::Document jsonDocSend;
-				const char* jsonTxt = "{\"type\":\"error\",\"msg\":\"\"}";
-				jsonDocSend.Parse(jsonTxt);
-
-				// Type
-				rapidjson::Value& typeV = jsonDocSend["type"];
-				typeV.SetString("error");
-				// Temperature
-				rapidjson::Value& tempV = jsonDocSend["msg"];
-				tempV.SetString("You have send an invalid secretKey!");
-
-				// Stringify the DOM
-				rapidjson::StringBuffer buffer;
-				rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-				jsonDocSend.Accept(writer);
-
-				mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buffer.GetString(), buffer.GetSize());
-				std::cout << "[WebSocket] Error message send to " << addr << " !" << std::endl;
-				// SEND Error => bad key
+				if (DEBUG)std::cout << "[WebSocket] SecretKey isn't correct !" << std::endl;
+				sendError(nc, addr, "You have send an invalid secretKey!");
 			}
 			break;
 		}
@@ -203,6 +167,28 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 			break;
 		}
 	}
+}
+
+private void sendError(struct mg_connection *nc, char& addr[], string& message) {
+	// Document
+	rapidjson::Document jsonDocSend;
+	const char* jsonTxt = "{\"type\":\"error\",\"msg\":\"\"}";
+	jsonDocSend.Parse(jsonTxt);
+
+	// Type
+	rapidjson::Value& typeV = jsonDocSend["type"];
+	typeV.SetString("error");
+	// Temperature
+	rapidjson::Value& tempV = jsonDocSend["msg"];
+	tempV.SetString(msg);
+
+	// Stringify the DOM
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	jsonDocSend.Accept(writer);
+
+	mg_send_websocket_frame(nc, WEBSOCKET_OP_TEXT, buffer.GetString(), buffer.GetSize());
+	if (DEBUG)std::cout << "[WebSocket] Error message send to " << addr << " !" << std::endl;
 }
 
 // Mem Usage
