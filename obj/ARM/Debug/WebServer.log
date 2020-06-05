@@ -1,0 +1,32 @@
+﻿  Cleaning remote project directory
+  Validating sources
+  Copying sources remotely to 'house.box'
+  Validating architecture
+  Starting remote build
+  Compiling sources:
+  main.cpp
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(41,13): warning : ‘void ev_handler(mg_connection*, int, void*)’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(41,13): warning :  static void ev_handler(struct mg_connection *nc, int ev, void *p);
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(41,13): warning :              ^~~~~~~~~~
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(43,13): warning : ‘void sendError(mg_connection*, char*, std::__cxx11::string)’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(46,15): warning : ‘double mem_usage()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(46,15): warning :  static double mem_usage();
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(46,15): warning :                ^~~~~~~~~
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(47,15): warning : ‘double cpu_usage()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(47,15): warning :  static double cpu_usage();
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(47,15): warning :                ^~~~~~~~~
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(48,15): warning : ‘double temperature()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(48,15): warning :  static double temperature();
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(48,15): warning :                ^~~~~~~~~~~
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(49,12): warning : ‘int net_usage()’ declared ‘static’ but never defined [-Wunused-function]
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(49,12): warning :  static int net_usage();
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(49,12): warning :             ^~~~~~~~~
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(52,13): warning : ‘DEBUG’ defined but not used [-Wunused-variable]
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(52,13): warning :  static bool DEBUG = false;
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(52,13): warning :              ^~~~~
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(38,34): warning : ‘s_http_server_opts’ defined but not used [-Wunused-variable]
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(38,34): warning :  static struct mg_serve_http_opts s_http_server_opts;
+C:\Users\Corentin\source\repos\Octanne\WebServer\WebServer.h(38,34): warning :                                   ^~~~~~~~~~~~~~~~~~
+  WebServer.cpp
+  Linking objects
+  WebServer.vcxproj -> C:\Users\Corentin\source\repos\Octanne\WebServer\bin\ARM\Debug\WebServer.out

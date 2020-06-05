@@ -32,6 +32,68 @@
       ],
       "visualizerFile": "${debugInfo.linuxNatvisPath}",
       "showDisplayString": true
+    },
+    {
+      "type": "cppdbg",
+      "name": "C:\\Users\\Corentin\\Source\\Repos\\Octanne\\WebServer(1)",
+      "project": "",
+      "cwd": "${debugInfo.remoteWorkspaceRoot}",
+      "program": "${debugInfo.fullTargetPath}",
+      "processId": 0,
+      "MIMode": "gdb",
+      "externalConsole": true,
+      "remoteMachineName": "${debugInfo.remoteMachineName}",
+      "pipeTransport": {
+        "pipeProgram": "${debugInfo.shellexecPath}",
+        "pipeArgs": [
+          "/s",
+          "${debugInfo.remoteMachineId}",
+          "/p",
+          "${debugInfo.parentProcessId}",
+          "/c",
+          "${debuggerCommand}"
+        ],
+        "debuggerPath": "/usr/bin/gdb"
+      },
+      "setupCommands": [
+        {
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "visualizerFile": "${debugInfo.linuxNatvisPath}",
+      "showDisplayString": true
+    },
+    {
+      "type": "cppdbg",
+      "name": "C:\\Users\\Corentin\\Source\\Repos\\Octanne\\WebServer(2)",
+      "project": "",
+      "cwd": "${debugInfo.remoteWorkspaceRoot}",
+      "program": "${debugInfo.fullTargetPath}",
+      "MIMode": "gdb",
+      "externalConsole": true,
+      "remoteMachineName": "${debugInfo.remoteMachineName}",
+      "pipeTransport": {
+        "pipeProgram": "${debugInfo.shellexecPath}",
+        "pipeArgs": [
+          "/s",
+          "${debugInfo.remoteMachineId}",
+          "/p",
+          "${debugInfo.parentProcessId}",
+          "/c",
+          "${debuggerCommand}",
+          "--tty=${debugInfo.tty}"
+        ],
+        "debuggerPath": "/usr/bin/gdb"
+      },
+      "setupCommands": [
+        {
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "visualizerFile": "${debugInfo.linuxNatvisPath}",
+      "showDisplayString": true
     }
   ]
 }

@@ -1,4 +1,3 @@
-#include "mongoose.h"
 #include <string>
 #include <iostream>
 #include <thread>
@@ -16,5 +15,9 @@ int main(void) {
 	
 	thread wThread(wServer, &wServ);
 	cout << endl << "Type something to stop the server..." << endl;
+	string entry;
+	cin >> entry;
+	wServ.stop();
 	wThread.join();
+	cout << "Server stoped!";
 }

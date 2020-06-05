@@ -5856,7 +5856,7 @@ extern "C" {
 #define MG_DNS_SERVER_DEFAULT_TTL 3600
 
 	struct mg_dns_reply {
-		struct mg_dns_message *msg;
+		struct mg_dns_message *message;
 		struct mbuf *io;
 		size_t start;
 	};

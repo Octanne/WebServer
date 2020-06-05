@@ -44,12 +44,17 @@ void WebServer::launch() {
 
 	for (;;) {
 		mg_mgr_poll(&mgr, 1000);
+		if(!isUp)break;
 	}
 
 	//Free up all memory allocated
 	mg_mgr_free(&mgr);
 
 	return;
+}
+
+void WebServer::stop() {
+	isUp = false;
 }
 
 std::string intoString(const char* a, int size)
@@ -87,8 +92,8 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 			struct websocket_message *wm = (struct websocket_message *) p;
 			struct mg_str d = { (char *)wm->data, wm->size };
 			/* Request Receive */
+			char addr[32];
 			if (DEBUG) {
-				char addr[32];
 				mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
 					MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
 				std::cout << "[WebSocket] a new request receive of " << addr << " :" << std::endl;
@@ -110,7 +115,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 				std::cout << "---------------------------------------" << std::endl;
 			}
 
-			if (std::string(secretKey.GetString()) == SECRET_KEY) {
+			if (std::string(secretKey.GetString()) == SECRETKEY) {
 				if(DEBUG)std::cout << "[WebSocket] SecretKey is correct !" << std::endl;
 				if (std::string(order.GetString()) == "status") {
 					
@@ -169,7 +174,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 	}
 }
 
-private void sendError(struct mg_connection *nc, char& addr[], string& message) {
+static void sendError(struct mg_connection *nc, char addr[], std::string message) {
 	// Document
 	rapidjson::Document jsonDocSend;
 	const char* jsonTxt = "{\"type\":\"error\",\"msg\":\"\"}";
@@ -180,7 +185,7 @@ private void sendError(struct mg_connection *nc, char& addr[], string& message) 
 	typeV.SetString("error");
 	// Temperature
 	rapidjson::Value& tempV = jsonDocSend["msg"];
-	tempV.SetString(msg);
+	tempV.SetString(rapidjson::StringRef(message.c_str()));
 
 	// Stringify the DOM
 	rapidjson::StringBuffer buffer;
